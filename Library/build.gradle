@@ -1,5 +1,8 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'utcn'
@@ -12,6 +15,29 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation("mysql:mysql-connector-java:8.0.33")
+
+    implementation "org.openjfx:javafx-controls:21.0.1"
+    implementation "org.openjfx:javafx-fxml:21.0.1"
+}
+
+apply plugin: "com.github.johnrengelman.shadow"
+
+
+javafx {
+    version = "21.0.1"
+    modules = ['javafx.controls', 'javafx.fxml']
+
+}
+
+application{
+    mainClass = 'launcher.Main'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class' : 'launcher.Main'
+    }
 }
 
 test {
