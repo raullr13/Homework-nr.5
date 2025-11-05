@@ -32,7 +32,7 @@ public class ComponentFactory {
         return instance;
     }
 
-    public ComponentFactory(Boolean componentsForTest, Stage primaryStage)
+    private ComponentFactory(Boolean componentsForTest, Stage primaryStage)
     {
         Connection connection = DatabaseConnectionFactory.getConnectionWrapper(componentsForTest).getConnection();
         this.bookRepository = new BookRepositoryMySQL(connection);
@@ -40,6 +40,24 @@ public class ComponentFactory {
         List<BookDTO> bookDTOs = BookMapper.convertBookListToBookDTOList(bookService.findAll());
         this.bookView = new BookView(primaryStage, bookDTOs);
         this.bookController = new BookController(bookView, bookService);
+    }
+
+    public static synchronized ComponentFactory init(Stage primaryStage, boolean componentsForTest)
+    {
+        if(instance == null)
+        {
+            instance = new ComponentFactory(componentsForTest, primaryStage);
+        }
+        return instance;
+    }
+
+    public static ComponentFactory getInstance()
+    {
+        if(instance == null)
+        {
+            throw new IllegalStateException("Component Factory not initialized");
+        }
+        return instance;
     }
 
     public BookView getBookView() {
