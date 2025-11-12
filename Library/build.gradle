@@ -31,12 +31,12 @@ javafx {
 }
 
 application{
-    mainClass = 'launcher.Main'
+    mainClass = 'Main'
 }
 
 jar {
     manifest {
-        attributes 'Main-Class' : 'launcher.Main'
+        attributes 'Main-Class' : 'Main'
     }
 }
 
